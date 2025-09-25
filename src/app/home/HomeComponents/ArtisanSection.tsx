@@ -29,13 +29,12 @@ export default function ArtisanSection() {
     if (!container) return;
 
     const handleScroll = () => {
-      const containerCenter = container.scrollLeft + container.offsetWidth / 2;
       let closestIndex = 0;
       let minDistance = Infinity;
 
-      [...container.children].forEach((child, index) => {
-        const childCenter =
-          child.offsetLeft + child.offsetWidth / 2 - container.scrollLeft;
+      Array.from(container.children).forEach((child, index) => {
+        const el = child as HTMLElement; // ✅ Narrow type
+        const childCenter = el.offsetLeft + el.offsetWidth / 2 - container.scrollLeft;
         const distance = Math.abs(container.offsetWidth / 2 - childCenter);
 
         if (distance < minDistance) {
@@ -48,7 +47,7 @@ export default function ArtisanSection() {
     };
 
     container.addEventListener("scroll", handleScroll);
-    handleScroll();
+    handleScroll(); // run once on mount
 
     return () => container.removeEventListener("scroll", handleScroll);
   }, []);
@@ -67,7 +66,10 @@ export default function ArtisanSection() {
   };
 
   return (
-    <section className="pt-8 md:pt-12 lg:pt-16 pb-8 md:pb-12 lg:pb-20 bg-[#fef6eb]" id="artisans">
+    <section
+      className="pt-8 md:pt-12 lg:pt-16 pb-8 md:pb-12 lg:pb-20 bg-[#fef6eb]"
+      id="artisans"
+    >
       <div className="px-4 md:px-8 lg:px-16 xl:px-24 text-center">
         <h2 className="font-cormorant text-2xl md:text-4xl lg:text-5xl font-bold text-[var(--text-hover-clr)] mb-4">
           Meet the Hands Behind the Art
@@ -80,7 +82,7 @@ export default function ArtisanSection() {
         <div className="relative">
           <button
             onClick={() => scroll("left")}
-            className="absolute left-1 md:left-2 top-1/2 -translate-y-1/2 bg-[#ffe6cd] text-black p-3 rounded-full shadow-md hover:bg-[#ffe6cd] z-10"
+            className="absolute left-1 md:left-2 top-1/2 -translate-y-1/2 bg-[#ffe6cd] text-black p-3 rounded-full shadow-md hover:bg-[#ffd9b3] z-10"
           >
             <FaChevronLeft size={20} />
           </button>
@@ -97,14 +99,14 @@ export default function ArtisanSection() {
               >
                 <div className="overflow-hidden relative rounded-xl">
                   <Image
-                    src={artisan.image} // use public folder path
+                    src={artisan.image}
                     height={300}
                     width={300}
                     alt={artisan.name}
                     className="w-full h-[300px] object-fill transform group-hover:scale-105 transition duration-500"
                   />
                   {index !== centerIndex && (
-                    <div className="absolute inset-0 bg-black/60 transition z-9"></div>
+                    <div className="absolute inset-0 bg-black/60 transition"></div>
                   )}
                   <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-[85%] bg-[#ffe6cd] rounded-[10px] px-4 py-2 text-center shadow-md">
                     <h3 className="font-nexa text-lg md:text-xl font-semibold text-[var(--text-hover-clr)]">
@@ -119,7 +121,7 @@ export default function ArtisanSection() {
 
           <button
             onClick={() => scroll("right")}
-            className="absolute right-1 md:right-2 top-1/2 -translate-y-1/2 bg-[#ffe6cd] text-black p-3 rounded-full shadow-md hover:bg-[#ffe6cd] z-10"
+            className="absolute right-1 md:right-2 top-1/2 -translate-y-1/2 bg-[#ffe6cd] text-black p-3 rounded-full shadow-md hover:bg-[#ffd9b3] z-10"
           >
             <FaChevronRight size={20} />
           </button>
