@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 type Artisan = {
   id: number;
   name: string;
@@ -27,9 +29,11 @@ const ArtisanCard: React.FC<ArtisanCardProps> = ({
       className="cursor-pointer relative group flex-shrink-0 w-[280px] snap-center"
     >
       <div className="overflow-hidden relative rounded-xl">
-        <img
+        <Image
           src={artisan.image}
           alt={artisan.name}
+          width={280}
+          height={340}
           className="w-full h-[340px] object-fill transform group-hover:scale-105 transition duration-500"
         />
         {index !== undefined &&

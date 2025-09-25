@@ -14,6 +14,8 @@ export default function OurMission() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const currentSection = sectionRef.current; // copy ref for safety
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -37,18 +39,19 @@ export default function OurMission() {
           };
 
           requestAnimationFrame(animate);
-          if (sectionRef.current) observer.unobserve(sectionRef.current);
+
+          if (currentSection) observer.unobserve(currentSection);
         }
       },
       { threshold: 0.3 }
     );
 
-    if (sectionRef.current) observer.observe(sectionRef.current);
+    if (currentSection) observer.observe(currentSection);
 
     return () => {
-      if (sectionRef.current) observer.unobserve(sectionRef.current);
+      if (currentSection) observer.unobserve(currentSection);
     };
-  }, []);
+  }, [achievements]); // ✅ include achievements as dependency
 
   return (
     <section
@@ -58,14 +61,14 @@ export default function OurMission() {
       {/* Header */}
       <div className="max-w-7xl mx-auto text-center mb-8 md:mb-16">
         <h2 className="inline-block bg-[var(--text-hover-clr)] text-white font-nexa px-5 py-1 md:py-2 rounded-full text-sm mb-5 shadow-lg">
-          Our Mission & Achievements
+          Our Mission &amp; Achievements
         </h2>
         <h3 className="text-3xl md:text-4xl lg:text-5xl font-cormorant font-bold text-[var(--text-clr)]">
           Craftorium: Empowering Creators, Achieving Milestones
         </h3>
         <p className="text-md md:text-lg lg:text-xl font-nexa text-[var(--text-clr)] mt-4 max-w-2xl mx-auto">
           At Craftorium, we provide a trusted multivendor marketplace where
-          creativity meets opportunity. Here's what we have achieved so far:
+          creativity meets opportunity. Here&apos;s what we have achieved so far:
         </p>
       </div>
 
