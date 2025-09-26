@@ -22,10 +22,10 @@ export default function RootLayout({
       <html lang="en">
         <body>
           <Header />
-        
+
           <Toaster />
           <AppContextProvider>{children}</AppContextProvider>
-        
+
           <Footer />
         </body>
       </html>

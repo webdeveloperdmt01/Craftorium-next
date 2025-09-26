@@ -1,64 +1,37 @@
-// {
-//   "compilerOptions": {
-//     "target": "ES2017",
-//     "lib": ["dom", "dom.iterable", "esnext"],
-//     "allowJs": true,
-//     "skipLibCheck": true,
-//     "strict": true,
-//     "noEmit": true,
-//     "esModuleInterop": true,
-//     "module": "esnext",
-//     "moduleResolution": "bundler",
-//     "resolveJsonModule": true,
-//     "isolatedModules": true,
-//     "jsx": "preserve",
-//     "incremental": true,
-//       "forceConsistentCasingInFileNames": true,
-//     "plugins": [
-//       {
-//         "name": "next"
-//       }
-//     ],
-//     "paths": {
-//       "@/*": ["./src/*"]
-//     }
-//   },
-//   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-//   "exclude": ["node_modules"]
-// }
 {
   "compilerOptions": {
     /* Language & Environment */
-    "target": "ES2020",                       // Slightly newer than ES2017, better async/await & features
-    "lib": ["dom", "dom.iterable", "esnext"], // Browser + modern JS
+    "target": "ES2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
 
     /* JavaScript Support */
-    "allowJs": true,                         // Disable JS if you're fully on TypeScript
-    "checkJs": false,                         // Don’t type-check JS files
+    "allowJs": true,
+    "checkJs": false,
 
     /* Type Checking */
-    "strict": true,                           // Enable all strict checks
-    "forceConsistentCasingInFileNames": true, // Enforce import casing rules
-    "skipLibCheck": true,                     // Skip type checks in node_modules
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
 
     /* Module Resolution */
     "module": "esnext",
-    "moduleResolution": "bundler",            // Best for Next.js + ESM
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "resolveJsonModule": true,
 
     /* JSX & React */
-    "jsx": "preserve",                        // Let Next.js handle JSX
-    "isolatedModules": true,                  // Required for Next.js
-    "noEmit": true,                           // Don’t output compiled files
+    "jsx": "preserve",
+    "isolatedModules": true,
+    "noEmit": true,
 
     /* Project Options */
-    "incremental": true,                      // Faster builds w/ cache
+    "incremental": true,
     "plugins": [{ "name": "next" }],
 
     /* Path Aliases */
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@lib/*": ["./src/api/lib/*"]   // ✅ add alias for api/lib
     }
   },
   "include": [

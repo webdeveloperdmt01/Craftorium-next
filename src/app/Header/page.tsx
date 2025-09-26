@@ -1,6 +1,7 @@
 // app/page.tsx (or better: app/layout.tsx if you want Header globally)
 "use client";
 
+
 import { useState, useRef, useEffect } from "react";
 import { Menu, X, Search, ShoppingCart, User } from "lucide-react";
 import { FaChevronDown } from "react-icons/fa";
@@ -14,6 +15,7 @@ export default function Header() {
   const [isSubShopOpen, setIsSubShopOpen] = useState(false);
   const shopRef = useRef<HTMLDivElement | null>(null);
 
+ 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (shopRef.current && !shopRef.current.contains(e.target as Node)) {
@@ -30,7 +32,7 @@ export default function Header() {
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between px-4 md:px-8 lg:px-8 xl:px-24 py-1">
         {/* Logo + Mobile Menu */}
         <div className="flex items-center justify-between w-full lg:w-auto">
-         <Link href="/">
+         <Link href="/home">
   <Image
     src="/images/ct-logo.png"
     alt="Logo"
@@ -58,8 +60,8 @@ export default function Header() {
             Home
           </Link>
 
-          {/* Shop Dropdown */}
-          <div
+          {/* Shop Dropdown  */}
+           <div
             ref={shopRef}
             className="relative group"
             onMouseEnter={() => window.innerWidth >= 1024 && setIsShopOpen(true)}
@@ -94,45 +96,45 @@ export default function Header() {
                     }
                     className="flex justify-between items-center w-full px-2 py-1 hover:bg-gray-100 rounded"
                   >
-                    Clothing <FaChevronDown size={14} />
+                    Product List <FaChevronDown size={14} />
                   </button>
 
                   {isSubShopOpen && (
                     <div className="absolute left-28 top-6 w-40 bg-[#fef6eb] border rounded-lg shadow-lg">
-                      <Link
-                        href="/shop/men"
+                      {/* <Link
+                        href="/cart-component/all-products"
                         className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
                       >
                         Men
-                      </Link>
-                      <Link
-                        href="/shop/women"
+                      </Link> */}
+                      {/* <Link
+                        href="/cart-component/all-products"
                         className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
                       >
                         Women
-                      </Link>
+                      </Link> */}
                       <Link
-                        href="/shop/kids"
+                        href="/cart-component/all-products"
                         className="block px-2 py-1 text-sm hover:bg-gray-100 rounded"
                       >
-                        Kids
+                        All Products
                       </Link>
                     </div>
                   )}
-                </div>
+                </div> 
 
-                <Link
-                  href="/shop/accessories"
+                {/* <Link
+                  href="/cart-component/all-products"
                   className="block px-2 py-1 hover:bg-gray-100 rounded"
                 >
                   Accessories
-                </Link>
-                <Link
+                </Link> */}
+                {/* <Link
                   href="/shop/home-decor"
                   className="block px-2 py-1 hover:bg-gray-100 rounded"
                 >
                   Home Decor
-                </Link>
+                </Link> */}
               </div>
             )}
           </div>
@@ -153,9 +155,11 @@ export default function Header() {
           {/* <Link href="/shop" className="hover:text-[var(--text-hover-clr)]">
             shop
           </Link> */}
-          <Link href="/cart-component" className="hover:text-[var(--text-hover-clr)]">
-            cart
-          </Link>
+
+          
+          {/* <Link href="/cart-component" className="hover:text-[var(--text-hover-clr)]">
+            Cart
+          </Link> */}
         
         </nav>
 
@@ -174,6 +178,7 @@ export default function Header() {
           </div>
           <ShoppingCart className="w-6 h-6 text-[var(--text-clr)] cursor-pointer" />
           <User className="w-6 h-6 text-[var(--text-clr)] cursor-pointer" />
+
         </div>
       </div>
     </header>
