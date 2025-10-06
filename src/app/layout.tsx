@@ -4,7 +4,7 @@ import Header from "./Header/page";
 import Footer from "./Footer/page";
 import { AppContextProvider } from "@/context/AppContext";
 import { Toaster } from "react-hot-toast";
-import { ClerkProvider } from "@clerk/nextjs";
+
 
 export const metadata = {
   title: "Craftorium",
@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-<ClerkProvider>
+
       <html lang="en">
         <body>
        
@@ -28,6 +28,6 @@ export default function RootLayout({
           
         </body>
       </html>
-    </ClerkProvider>
+   
   );
 }
