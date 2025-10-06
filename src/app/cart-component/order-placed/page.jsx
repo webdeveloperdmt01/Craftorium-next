@@ -24,3 +24,5 @@ const OrderPlaced = () => {
     </div>
   )
 }
+
+export default OrderPlaced

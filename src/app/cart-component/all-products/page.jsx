@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react"; // Added React import
 import ProductCard from "@/components/ProductCard";
 import { useAppContext } from "@/context/AppContext";
 import Link from "next/link";
@@ -19,15 +19,6 @@ const AllProducts = () => {
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // --- Price Slider State ---
-  const [minValue, setMinValue] = useState(0);
-  const [maxValue, setMaxValue] = useState(2500);
-  const [activeThumb, setActiveThumb] = useState(null); // 'min' or 'max'
-
-  // Refs
-  const sliderRef = useRef(null);
-  const isDragging = useRef(false);
-
   // --- Detect mobile screen ---
   useEffect(() => {
     const checkScreenSize = () => {
@@ -45,10 +36,9 @@ const AllProducts = () => {
     if (products && products.length > 0) {
       const prices = products.map(product => {
         let productPrice = 0;
-        const priceToUse = product.offerPrice || product.price;
-        if (priceToUse) {
-          if (typeof priceToUse === "string") productPrice = parseFloat(priceToUse.replace(/[^0-9.-]+/g, ""));
-          else if (typeof priceToUse === "number") productPrice = priceToUse;
+        if (product.price) {
+          if (typeof product.price === "string") productPrice = parseFloat(product.price.replace(/[^0-9.-]+/g, ""));
+          else if (typeof product.price === "number") productPrice = product.price;
         }
         return productPrice;
       }).filter(price => !isNaN(price) && price > 0);
@@ -59,123 +49,11 @@ const AllProducts = () => {
         setMinPrice(min);
         setMaxPrice(max);
         setPriceRange({ min, max });
-        setMinValue(min);
-        setMaxValue(max);
       }
     }
   }, [products]);
 
-  // --- Sync priceRange with minValue and maxValue ---
-  useEffect(() => {
-    setPriceRange({ min: minValue, max: maxValue });
-  }, [minValue, maxValue]);
-
-  // --- Mouse Drag Handlers ---
-  const getPositionFromEvent = useCallback((e) => {
-    const slider = sliderRef.current;
-    if (!slider) return 0;
-    
-    const rect = slider.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const percentage = (x / rect.width) * 100;
-    return Math.min(Math.max(percentage, 0), 100);
-  }, []);
-
-  const getValueFromPercentage = useCallback((percentage) => {
-    return minPrice + (percentage / 100) * (maxPrice - minPrice);
-  }, [minPrice, maxPrice]);
-
-  const handleMouseDown = (thumb) => (e) => {
-    e.preventDefault();
-    isDragging.current = true;
-    setActiveThumb(thumb);
-    
-    // Add event listeners
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-    document.body.style.userSelect = 'none'; // Prevent text selection
-  };
-
-  const handleMouseMove = useCallback((e) => {
-    if (!isDragging.current || !activeThumb) return;
-
-    const percentage = getPositionFromEvent(e);
-    const newValue = getValueFromPercentage(percentage);
-
-    if (activeThumb === 'min') {
-      const constrainedValue = Math.min(newValue, maxValue - 1);
-      setMinValue(Math.round(constrainedValue));
-    } else {
-      const constrainedValue = Math.max(newValue, minValue + 1);
-      setMaxValue(Math.round(constrainedValue));
-    }
-  }, [activeThumb, minValue, maxValue, getPositionFromEvent, getValueFromPercentage]);
-
-  const handleMouseUp = useCallback(() => {
-    isDragging.current = false;
-    setActiveThumb(null);
-    
-    // Remove event listeners
-    document.removeEventListener('mousemove', handleMouseMove);
-    document.removeEventListener('mouseup', handleMouseUp);
-    document.body.style.userSelect = ''; // Restore text selection
-  }, [handleMouseMove]);
-
-  // Cleanup event listeners on unmount
-  useEffect(() => {
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [handleMouseMove]);
-
-  // --- Touch Handlers for Mobile ---
-  const handleTouchStart = (thumb) => (e) => {
-    if (!isMobile) return;
-    
-    e.preventDefault();
-    isDragging.current = true;
-    setActiveThumb(thumb);
-    
-    // Add touch event listeners
-    document.addEventListener('touchmove', handleTouchMove, { passive: false });
-    document.addEventListener('touchend', handleTouchEnd);
-  };
-
-  const handleTouchMove = useCallback((e) => {
-    if (!isDragging.current || !activeThumb || !e.touches[0]) return;
-    
-    e.preventDefault();
-    const percentage = getPositionFromEvent(e.touches[0]);
-    const newValue = getValueFromPercentage(percentage);
-
-    if (activeThumb === 'min') {
-      const constrainedValue = Math.min(newValue, maxValue - 1);
-      setMinValue(Math.round(constrainedValue));
-    } else {
-      const constrainedValue = Math.max(newValue, minValue + 1);
-      setMaxValue(Math.round(constrainedValue));
-    }
-  }, [activeThumb, minValue, maxValue, getPositionFromEvent, getValueFromPercentage]);
-
-  const handleTouchEnd = useCallback(() => {
-    isDragging.current = false;
-    setActiveThumb(null);
-    
-    // Remove touch event listeners
-    document.removeEventListener('touchmove', handleTouchMove);
-    document.removeEventListener('touchend', handleTouchEnd);
-  }, [handleTouchMove]);
-
-  // Cleanup touch event listeners on unmount
-  useEffect(() => {
-    return () => {
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
-    };
-  }, [handleTouchMove]);
-
-  // --- Other Handlers ---
+  // --- Handlers ---
   const handleCategoryChange = (category) => {
     setSelectedCategories(prev =>
       prev.includes(category)
@@ -200,28 +78,19 @@ const AllProducts = () => {
     );
   };
 
-  // Smooth Price Range Handlers
-  const handleMinChange = (e) => {
-    const value = Math.min(Number(e.target.value), maxValue - 1);
-    setMinValue(value);
+  // Price Range Handlers
+  const handlePriceRangeChange = (newRange) => {
+    setPriceRange(newRange);
   };
 
-  const handleMaxChange = (e) => {
-    const value = Math.max(Number(e.target.value), minValue + 1);
-    setMaxValue(value);
-  };
-
-  // Input handlers with proper constraints
   const handleMinInputChange = (e) => {
-    const inputValue = parseFloat(e.target.value) || minPrice;
-    const val = Math.min(Math.max(inputValue, minPrice), maxValue - 1);
-    setMinValue(val);
+    const val = Math.min(Math.max(parseFloat(e.target.value) || minPrice, minPrice), priceRange.max - 1);
+    setPriceRange(prev => ({ ...prev, min: val }));
   };
 
   const handleMaxInputChange = (e) => {
-    const inputValue = parseFloat(e.target.value) || maxPrice;
-    const val = Math.min(Math.max(inputValue, minValue + 1), maxPrice);
-    setMaxValue(val);
+    const val = Math.min(Math.max(parseFloat(e.target.value) || maxPrice, priceRange.min + 1), maxPrice);
+    setPriceRange(prev => ({ ...prev, max: val }));
   };
 
   const toggleMobileFilter = () => {
@@ -240,7 +109,7 @@ const AllProducts = () => {
       if (typeof priceToUse === "string") productPrice = parseFloat(priceToUse.replace(/[^0-9.-]+/g, ""));
       else if (typeof priceToUse === "number") productPrice = priceToUse;
     }
-    if (productPrice < minValue || productPrice > maxValue) return false;
+    if (productPrice < priceRange.min || productPrice > priceRange.max) return false;
 
     return true;
   });
@@ -251,6 +120,27 @@ const AllProducts = () => {
 
   // Price Filter Component
   const PriceFilter = () => {
+    const [minValue, setMinValue] = useState(priceRange.min);
+    const [maxValue, setMaxValue] = useState(priceRange.max);
+    const sliderRef = useRef(null);
+
+    useEffect(() => {
+      setMinValue(priceRange.min);
+      setMaxValue(priceRange.max);
+    }, [priceRange]);
+    
+    const handleMinChange = (e) => {
+      const value = Math.min(Number(e.target.value), maxValue - 1);
+      setMinValue(value);
+      handlePriceRangeChange({ min: value, max: maxValue });
+    };
+
+    const handleMaxChange = (e) => {
+      const value = Math.max(Number(e.target.value), minValue + 1);
+      setMaxValue(value);
+      handlePriceRangeChange({ min: minValue, max: value });
+    };
+
     const minPercent = ((minValue - minPrice) / (maxPrice - minPrice)) * 100;
     const maxPercent = ((maxValue - minPrice) / (maxPrice - minPrice)) * 100;
 
@@ -265,7 +155,7 @@ const AllProducts = () => {
         <h5 className="font-cormorant text-text-clr font-semibold mb-4 text-lg">Price</h5>
         
         {/* Dual Range Slider */}
-        <div className="mb-6 relative" ref={sliderRef}>
+        <div className="mb-6 relative">
           <div className="absolute h-1 bg-gray-300 rounded-full w-full top-1/2 transform -translate-y-1/2"></div>
           <div 
             className="absolute h-1 bg-orange-500 rounded-full top-1/2 transform -translate-y-1/2"
@@ -275,7 +165,6 @@ const AllProducts = () => {
             }}
           ></div>
 
-          {/* Hidden range inputs for accessibility */}
           <input
             type="range"
             min={minPrice}
@@ -283,7 +172,6 @@ const AllProducts = () => {
             value={minValue}
             onChange={handleMinChange}
             className="absolute w-full h-2 top-1/2 transform -translate-y-1/2 appearance-none cursor-pointer opacity-0 z-10"
-            step="1"
           />
 
           <input
@@ -293,30 +181,16 @@ const AllProducts = () => {
             value={maxValue}
             onChange={handleMaxChange}
             className="absolute w-full h-2 top-1/2 transform -translate-y-1/2 appearance-none cursor-pointer opacity-0 z-10"
-            step="1"
           />
 
-          {/* Draggable Thumbs */}
           <div
-            className={`absolute w-5 h-5 bg-white border-2 border-orange-500 rounded-full shadow-lg -top-1 -ml-2 cursor-grab z-20 transition-all duration-150 ${
-              activeThumb === 'min' 
-                ? 'scale-125 cursor-grabbing shadow-xl' 
-                : 'hover:scale-110 cursor-grab'
-            }`}
+            className="absolute w-4 h-4 bg-white border-2 border-orange-500 rounded-full shadow-md -top-1 -ml-2 cursor-pointer z-20 hover:scale-110 transition-transform"
             style={{ left: `${minPercent}%` }}
-            onMouseDown={handleMouseDown('min')}
-            onTouchStart={handleTouchStart('min')}
           />
 
           <div
-            className={`absolute w-5 h-5 bg-white border-2 border-orange-500 rounded-full shadow-lg -top-1 -ml-2 cursor-grab z-20 transition-all duration-150 ${
-              activeThumb === 'max' 
-                ? 'scale-125 cursor-grabbing shadow-xl' 
-                : 'hover:scale-110 cursor-grab'
-            }`}
+            className="absolute w-4 h-4 bg-white border-2 border-orange-500 rounded-full shadow-md -top-1 -ml-2 cursor-pointer z-20 hover:scale-110 transition-transform"
             style={{ left: `${maxPercent}%` }}
-            onMouseDown={handleMouseDown('max')}
-            onTouchStart={handleTouchStart('max')}
           />
         </div>
 
@@ -361,7 +235,6 @@ const AllProducts = () => {
     );
   };
 
-  // ... Rest of your component remains the same (FilterSidebar and return JSX)
   const FilterSidebar = () => (
     <div className={`bg-white p-4 rounded-lg shadow-sm border border-orange-200 ${
       isMobile ? 
@@ -517,3 +390,5 @@ const AllProducts = () => {
     </>
   );
 };
+
+export default AllProducts;
