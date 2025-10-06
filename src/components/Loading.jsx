@@ -1,11 +1,12 @@
-import React from 'react'
-
+// components/Loading.jsx or Loading.tsx
 const Loading = () => {
-    return (
-        <div className="flex justify-center items-center h-[70vh]">
-            <div className="animate-spin rounded-full h-20 w-20 border-4 border-t-orange-300 border-gray-200"></div>
-        </div>
-    )
-}
+  return (
+    <div className="flex justify-center items-center">
+      {/* Your loading spinner or skeleton */}
+      <div>Loading...</div>
+    </div>
+  );
+};
 
-export default Loading
+// Make sure it's exported as default
+export default Loading;
