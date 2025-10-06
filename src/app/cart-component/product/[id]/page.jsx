@@ -1,16 +1,14 @@
-"use client"
+
+'use client';
 import { useEffect, useState } from "react";
 import { assets } from "@/assets/assets";
-import ProductCard from "@/components/ProductCard";
-
-
+// import ProductCard from "@/components/ProductCard";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import Loading from "@/components/Loading";
 import { useAppContext } from "@/context/AppContext";
-import React from "react";
+// import React from "react";
 import FeaturedProduct from "@/components/FeaturedProduct";
-
 
 const Product = () => {
 
@@ -38,7 +36,7 @@ const Product = () => {
                     <div className="rounded-lg overflow-hidden bg-gray-500/10 mb-4">
                         <Image
                             src={mainImage || productData.image[0]}
-                            alt="alt"
+                            alt={productData.name || "Product image"}
                             className="w-full h-auto object-cover mix-blend-multiply"
                             width={1280}
                             height={720}
@@ -54,7 +52,7 @@ const Product = () => {
                             >
                                 <Image
                                     src={image}
-                                    alt="alt"
+                                    alt={productData.name || `Product thumbnail ${index + 1}`}
                                     className="w-full h-auto object-cover mix-blend-multiply"
                                     width={1280}
                                     height={720}
@@ -71,14 +69,14 @@ const Product = () => {
                     </h1>
                     <div className="flex items-center gap-2">
                         <div className="flex items-center gap-0.5">
-                            <Image className="h-4 w-4" src={assets.star_icon} alt="star_icon" />
-                            <Image className="h-4 w-4" src={assets.star_icon} alt="star_icon" />
-                            <Image className="h-4 w-4" src={assets.star_icon} alt="star_icon" />
-                            <Image className="h-4 w-4" src={assets.star_icon} alt="star_icon" />
+                            <Image className="h-4 w-4" src={assets.star_icon} alt="Star icon" />
+                            <Image className="h-4 w-4" src={assets.star_icon} alt="Star icon" />
+                            <Image className="h-4 w-4" src={assets.star_icon} alt="Star icon" />
+                            <Image className="h-4 w-4" src={assets.star_icon} alt="Star icon" />
                             <Image
                                 className="h-4 w-4"
                                 src={assets.star_dull_icon}
-                                alt="star_dull_icon"
+                                alt="Star dull icon"
                             />
                         </div>
                         <p>(4.5)</p>

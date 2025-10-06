@@ -158,7 +158,7 @@ const AllProducts = () => {
         <div className="mb-6 relative">
           <div className="absolute h-1 bg-gray-300 rounded-full w-full top-1/2 transform -translate-y-1/2"></div>
           <div 
-            className="absolute h-1 bg-orange-500 rounded-full top-1/2 transform -translate-y-1/2"
+            className="absolute h-1 bg-[#615004] rounded-full top-1/2 transform -translate-y-1/2"
             style={{
               left: `${minPercent}%`,
               width: `${maxPercent - minPercent}%`
@@ -184,12 +184,12 @@ const AllProducts = () => {
           />
 
           <div
-            className="absolute w-4 h-4 bg-white border-2 border-orange-500 rounded-full shadow-md -top-1 -ml-2 cursor-pointer z-20 hover:scale-110 transition-transform"
+            className="absolute w-4 h-4 bg-white border-2 border-[#615004] rounded-full shadow-md -top-1 -ml-2 cursor-pointer z-20 hover:scale-110 transition-transform"
             style={{ left: `${minPercent}%` }}
           />
 
           <div
-            className="absolute w-4 h-4 bg-white border-2 border-orange-500 rounded-full shadow-md -top-1 -ml-2 cursor-pointer z-20 hover:scale-110 transition-transform"
+            className="absolute w-4 h-4 bg-white border-2 border-[#615004] rounded-full shadow-md -top-1 -ml-2 cursor-pointer z-20 hover:scale-110 transition-transform"
             style={{ left: `${maxPercent}%` }}
           />
         </div>
@@ -248,7 +248,7 @@ const AllProducts = () => {
           <h3 className="font-cormorant text-text-clr font-semibold text-xl">Filters</h3>
           <button 
             onClick={toggleMobileFilter}
-            className="text-3xl text-gray-600 hover:text-orange-500 p-2"
+            className="text-3xl text-gray-600 hover:text-[#615004] p-2"
           >
             ×
           </button>
@@ -269,13 +269,13 @@ const AllProducts = () => {
                     type="checkbox"
                     checked={selectedCategories.includes(cat)}
                     onChange={() => handleCategoryChange(cat)}
-                    className="accent-orange-500 w-5 h-5"
+                    className="accent-[#615004] w-5 h-5"
                   />
                   <span className="text-base">{cat}</span>
                 </label>
                 <Link 
                   href={`/products/${cat.toLowerCase()}`}
-                  className="text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity px-2 hover:text-orange-600"
+                  className="text-[#615004] opacity-0 group-hover:opacity-100 transition-opacity px-2 hover:text-orange-600"
                   title={`View all ${cat}`}
                 >
                   →
@@ -294,7 +294,7 @@ const AllProducts = () => {
                   type="checkbox"
                   checked={selectedBrands.includes(brand)}
                   onChange={() => handleBrandChange(brand)}
-                  className="accent-orange-500 w-5 h-5"
+                  className="accent-[#615004] w-5 h-5"
                 />
                 <span className="text-base">{brand}</span>
               </label>
@@ -311,7 +311,7 @@ const AllProducts = () => {
                   type="checkbox"
                   checked={selectedColor.includes(color)}
                   onChange={() => handleColorChange(color)}
-                  className="accent-orange-500 w-5 h-5"
+                  className="accent-[#615004] w-5 h-5"
                 />
                 <span className="text-base">{color}</span>
               </label>
@@ -324,7 +324,7 @@ const AllProducts = () => {
         <div className="sticky bottom-0 bg-white border-t border-gray-200 mt-6 pt-4 pb-4">
           <button
             onClick={toggleMobileFilter}
-            className="w-full bg-orange-500 text-white py-4 rounded-lg font-semibold hover:bg-orange-600 transition-colors text-lg"
+            className="w-full bg-[#184309] text-white py-4 rounded-lg font-semibold hover:bg-[#615004] transition-colors text-lg"
           >
             Apply Filters ({selectedCategories.length + selectedBrands.length + selectedColor.length})
           </button>
@@ -363,10 +363,10 @@ const AllProducts = () => {
               </h2>
               <button
                 onClick={toggleMobileFilter}
-                className="bg-orange-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-colors flex items-center gap-2"
+                className="bg-[#184309] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#1c4b0a] transition-colors flex items-center gap-2"
               >
                 <span>Filters</span>
-                <span className="bg-white text-orange-500 rounded-full w-6 h-6 flex items-center justify-center text-sm">
+                <span className="bg-white text-[#184309] rounded-full w-6 h-6 flex items-center justify-center text-sm">
                   {selectedCategories.length + selectedBrands.length + selectedColor.length}
                 </span>
               </button>

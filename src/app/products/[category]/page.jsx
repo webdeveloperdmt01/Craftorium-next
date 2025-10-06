@@ -5,6 +5,8 @@ import ProductCard from "@/components/ProductCard";
 import { useAppContext } from "@/context/AppContext";
 import Link from "next/link";
 
+
+
 const CategoryPage = () => {
   const params = useParams();
   const { products } = useAppContext();

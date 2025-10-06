@@ -42,15 +42,16 @@ export default function ConnectCTA() {
         </p>
 
         <div className="flex flex-col sm:flex-row justify-center gap-6 text-nexa">
-          {ctaButtons.map((btn, idx) => (
-            <Link key={idx} href={btn.href} legacyBehavior>
-              <a
-                className={`flex items-center justify-center gap-3 px-7 py-4 rounded-xl font-bold shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg ${btn.bg} ${btn.text} ${btn.hoverBg || ""} ${btn.hoverText || ""}`}
-              >
-                {btn.icon} {btn.label}
-              </a>
-            </Link>
-          ))}
+         {ctaButtons.map((btn, idx) => (
+  <Link
+    key={idx}
+    href={btn.href}
+    className={`flex items-center justify-center gap-3 px-7 py-4 rounded-xl font-bold shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg ${btn.bg} ${btn.text} ${btn.hoverBg || ""} ${btn.hoverText || ""}`}
+  >
+    {btn.icon} {btn.label}
+  </Link>
+))}
+
         </div>
       </div>
     </section>

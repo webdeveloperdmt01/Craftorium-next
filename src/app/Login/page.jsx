@@ -38,7 +38,7 @@ export default function Login() {
       const result = await login(formData.username, formData.password);
       
       if (result.success) {
-        router.push('/');
+        router.push('/Profile');
       } else {
         setError(result.error || 'Login failed');
       }

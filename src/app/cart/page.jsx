@@ -20,6 +20,7 @@ const Cart = () => {
         updateCartQuantity, 
         getCartCount, 
         getCartAmount, 
+         
         clearCart,
         currency,
         isAuthenticated
@@ -69,7 +70,7 @@ const Cart = () => {
                     <h2 className="text-xl font-bold text-gray-800 mb-2">Login Required</h2>
                     <p className="text-gray-600 mb-6">Please login to view your cart</p>
                     <Link 
-                        href="/login" 
+                        href="/Login" 
                         className="bg-[#615004] text-white px-6 py-2 rounded-lg hover:bg-[#184309] transition-colors inline-block"
                     >
                         Login Now
