@@ -1,6 +1,5 @@
 // src/app/layout.tsx
 import "./globals.css";
-
 import Header from "./Header/page";
 import Footer from "./Footer/page";
 import { AppContextProvider } from "@/context/AppContext";
