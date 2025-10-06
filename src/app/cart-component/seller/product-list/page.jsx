@@ -94,4 +94,8 @@ const ProductList = () => {
   );
 };
 
+<<<<<<< HEAD
 export default ProductList;
+=======
+export default ProductList;
+>>>>>>> 00a5a9bbee4e65110b83fee8da6a7b95c59306b7
