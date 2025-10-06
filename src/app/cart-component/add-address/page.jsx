@@ -90,9 +90,3 @@ const AddAddress = () => {
         </>
     );
 };
-
-<<<<<<< HEAD
-export default AddAddress;
-=======
-export default AddAddress;
->>>>>>> 00a5a9bbee4e65110b83fee8da6a7b95c59306b7

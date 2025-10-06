@@ -73,9 +73,3 @@ const MyOrders = () => {
         </>
     );
 };
-
-<<<<<<< HEAD
-export default MyOrders;
-=======
-export default MyOrders;
->>>>>>> 00a5a9bbee4e65110b83fee8da6a7b95c59306b7
